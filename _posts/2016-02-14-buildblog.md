@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "hello world!"
+title:  "利用Jekyll和Github Pages搭建博客"
 date:   2016-02-14 17:01:53 +0800
 categories: jekyll update
 ---
