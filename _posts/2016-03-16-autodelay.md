@@ -9,7 +9,6 @@ categories: jekyll update
 
 {% highlight javascript %}
 var a = 5;
-
 sdf
 
 {% endhighlight %}
