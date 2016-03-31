@@ -416,6 +416,7 @@ console.log( bar ); // ReferenceError
 用`let`来使变量依附块级作用域多少有些含蓄。当你没有太在意变量属于哪个作用域是可能会引起困惑，用新的块把它们包裹起来是一个进化你新代码的好习惯。
 
 为块级作用域创建明确的块可以打消这些担忧:
+
 ```js
 var foo = true;
 
@@ -429,14 +430,13 @@ if (foo) {
 
 console.log( bar ); // ReferenceError
 ```
+我们只需简单创建一对大括号来绑定`let`并且这是语法可行的。在这个例子中，我们在if分句中创造了一个明确的块，这样做既简单有不会影响if分句的语义。
 
-We can create an arbitrary block for `let` to bind to by simply including a `{ .. }` pair anywhere a statement is valid grammar. In this case, we've made an explicit block *inside* the if-statement, which may be easier as a whole block to move around later in refactoring, without affecting the position and semantics of the enclosing if-statement.
+**注释:** 另一种指定块级作用域的方法，见附录B。
 
-**Note:** For another way to express explicit block scopes, see Appendix B.
+在第四章中，我们要讨论提升，在声明所处的作用域中，处处可以得到它。
 
-In Chapter 4, we will address hoisting, which talks about declarations being taken as existing for the entire scope in which they occur.
-
-However, declarations made with `let` will *not* hoist to the entire scope of the block they appear in. Such declarations will not observably "exist" in the block until the declaration statement.
+但是，用`let`的声明不会提升到整个块中。这种声明直到执行到声明语句时才会被认为是存在的。
 
 ```js
 {
@@ -445,11 +445,11 @@ However, declarations made with `let` will *not* hoist to the entire scope of th
 }
 ```
 
-#### Garbage Collection
+#### 垃圾回收
 
-Another reason block-scoping is useful relates to closures and garbage collection to reclaim memory. We'll briefly illustrate here, but the closure mechanism is explained in detail in Chapter 5.
+块级作用域有用的另一个原因是对于闭包和垃圾回收的。我们只在这里简要提及，闭包机制我们会在第五章详细介绍。
 
-Consider:
+且看:
 
 ```js
 function process(data) {
@@ -467,16 +467,16 @@ btn.addEventListener( "click", function click(evt){
 }, /*capturingPhase=*/false );
 ```
 
-The `click` function click handler callback doesn't *need* the `someReallyBigData` variable at all. That means, theoretically, after `process(..)` runs, the big memory-heavy data structure could be garbage collected. However, it's quite likely (though implementation dependent) that the JS engine will still have to keep the structure around, since the `click` function has a closure over the entire scope.
+`click`函数的点击处理回调完全不需要`someReallyBigData`变量。这就是说，理论上`process(..)`执行之后，这个占用很多内存的数据结构就可以被当做垃圾回收了。但是，JS引擎似乎（取决于引擎具体实现）还保存着这个数据。
 
-Block-scoping can address this concern, making it clearer to the engine that it does not need to keep `someReallyBigData` around:
+块级作用域可以解决这个问题，只需告诉引擎 `someReallyBigData`不需要再保存了：
 
 ```js
 function process(data) {
 	// do something interesting
 }
 
-// anything declared inside this block can go away after!
+// 任何在块中声明的东西之后就可以滚了!
 {
 	let someReallyBigData = { .. };
 
@@ -490,11 +490,11 @@ btn.addEventListener( "click", function click(evt){
 }, /*capturingPhase=*/false );
 ```
 
-Declaring explicit blocks for variables to locally bind to is a powerful tool that you can add to your code toolbox.
+为变量声明明确的块用来本地绑定是一个强大的工具，足以加入你的代码工具箱了。
 
-#### `let` Loops
+#### `let` 循环
 
-A particular case where `let` shines is in the for-loop case as we discussed previously.
+`let`闪耀的另一个场景就是在前面讨论过的for循环例子中。
 
 ```js
 for (let i=0; i<10; i++) {
@@ -504,9 +504,9 @@ for (let i=0; i<10; i++) {
 console.log( i ); // ReferenceError
 ```
 
-Not only does `let` in the for-loop header bind the `i` to the for-loop body, but in fact, it **re-binds it** to each *iteration* of the loop, making sure to re-assign it the value from the end of the previous loop iteration.
+在for循环头部的`let`不仅把`i`绑定到了循环体中，事实上，它还在每次循环迭代中重建了变量`i`，以确保`i`被重新赋予前面迭代结果的值。
 
-Here's another way of illustrating the per-iteration binding behavior that occurs:
+这是另一种每次迭代绑定行为的例子：
 
 ```js
 {
@@ -518,11 +518,11 @@ Here's another way of illustrating the per-iteration binding behavior that occur
 }
 ```
 
-The reason why this per-iteration binding is interesting will become clear in Chapter 5 when we discuss closures.
+每次迭代绑定为什么有趣的原因会在第五章讨论闭包时水落石出。
 
-Because `let` declarations attach to arbitrary blocks rather than to the enclosing function's scope (or global), there can be gotchas where existing code has a hidden reliance on function-scoped `var` declarations, and replacing the `var` with `let` may require additional care when refactoring code.
+因为`let`声明依附于任意块而非闭合函数作用域，所以不难理解用`var`声明的隐藏代码需要依赖函数作用域，并且在重构代码时用 `let`代替 `var`要多加留意。
 
-Consider:
+且看:
 
 ```js
 var foo = true, baz = 10;
@@ -538,7 +538,7 @@ if (foo) {
 }
 ```
 
-This code is fairly easily re-factored as:
+很容易就能把这段代码重构为:
 
 ```js
 var foo = true, baz = 10;
@@ -554,7 +554,7 @@ if (baz > bar) {
 }
 ```
 
-But, be careful of such changes when using block-scoped variables:
+但是，针对块级作用域变量这么做是就要多加小心了：
 
 ```js
 var foo = true, baz = 10;
@@ -562,43 +562,41 @@ var foo = true, baz = 10;
 if (foo) {
 	let bar = 3;
 
-	if (baz > bar) { // <-- don't forget `bar` when moving!
+	if (baz > bar) { // <-- 移动时别忘了把`bar`也带上!
 		console.log( baz );
 	}
 }
 ```
 
-See Appendix B for an alternate (more explicit) style of block-scoping which may provide easier to maintain/refactor code that's more robust to these scenarios.
+附录B中可以看到一种代替（更明确）的块级作用域代码风格，针对这种情况更健壮，更容易维护和重构。
 
 ### `const`
 
-In addition to `let`, ES6 introduces `const`, which also creates a block-scoped variable, but whose value is fixed (constant). Any attempt to change that value at a later time results in an error.
+作为`let`的补充，ES6引入了`const`关键字，它也能创建块级作用域变量，但它的值是固定的。任何试图改变`const`值得操作都会引起系统报错。
 
 ```js
 var foo = true;
 
 if (foo) {
 	var a = 2;
-	const b = 3; // block-scoped to the containing `if`
+	const b = 3; // 存在于if的块级作用域中
 
-	a = 3; // just fine!
-	b = 4; // error!
+	a = 3; // 没问题!
+	b = 4; // 报错!
 }
 
 console.log( a ); // 3
 console.log( b ); // ReferenceError!
 ```
 
-## Review (TL;DR)
+## 总结
 
-Functions are the most common unit of scope in JavaScript. Variables and functions that are declared inside another function are essentially "hidden" from any of the enclosing "scopes", which is an intentional design principle of good software.
+函数是JavaScript中最普通的作用域单元。在函数中声明的变量和函数会被对外“隐藏”起来，这是一种很好的软件设计原则。
 
-But functions are by no means the only unit of scope. Block-scope refers to the idea that variables and functions can belong to an arbitrary block (generally, any `{ .. }` pair) of code, rather than only to the enclosing function.
+但函数不是唯一的作用域单元。块级作用域就是用块（通常为 `{ .. }`对）包裹代码，而不单单是包裹函数。
 
-Starting with ES3, the `try/catch` structure has block-scope in the `catch` clause.
+从ES3开始，`try/catch`结构的`catch`就形成了一个块级作用域。
 
-In ES6, the `let` keyword (a cousin to the `var` keyword) is introduced to allow declarations of variables in any arbitrary block of code. `if (..) { let a = 2; }` will declare a variable `a` that essentially hijacks the scope of the `if`'s `{ .. }` block and attaches itself there.
+在ES6中，`let`关键字（`var`关键字的表亲），就被引入用来在任何代码块中声明变量。 `if (..) { let a = 2; }`声明了一个变量 `a`，它实际上劫持了`if`的 `{ .. }`块并且把自己依附在上面。
 
-Though some seem to believe so, block scope should not be taken as an outright replacement of `var` function scope. Both functionalities co-exist, and developers can and should use both function-scope and block-scope techniques where respectively appropriate to produce better, more readable/maintainable code.
-
-[^note-leastprivilege]: [Principle of Least Privilege](http://en.wikipedia.org/wiki/Principle_of_least_privilege)
+块级作用域不应该取代函数作域。两种功能应该并存，开发者们应该用好函数作用域和块级作用域在各自适合的场景去生产更好，更可读可维护的代码。
