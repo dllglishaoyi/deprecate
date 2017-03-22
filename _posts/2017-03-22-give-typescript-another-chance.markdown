@@ -13,7 +13,7 @@ categories: jekyll update
 &emsp;&emsp;自2012年起，TypeScript成为了一些相对结构化语言（像 C++ 或者 Java）的程序员转入JavaScript的一个流行的选择。但与此同时，它也受到了大量JS世界“原住民”们的无视。
 <br>
 <br>
-&emsp;&emsp;你可能已经听说了Angular团队最近[为Angular 2 切换到了JavaScript](https://vsavkin.com/writing-angular-2-in-typescript-1fa77c78d8e8)。其他很多团队诸如 [RxJS](https://github.com/ReactiveX/rxjs)、
+&emsp;&emsp;你可能已经听说了Angular团队最近[为Angular 2 切换到了TypeScript](https://vsavkin.com/writing-angular-2-in-typescript-1fa77c78d8e8)。其他很多团队诸如 [RxJS](https://github.com/ReactiveX/rxjs)、
 [Ionic](https://blog.ionic.io/announcing-ionic-2-0-0-final/)、
 [Cycle.js](https://cycle.js.org/)、
 [Blueprint](https://github.com/palantir/blueprint)、
