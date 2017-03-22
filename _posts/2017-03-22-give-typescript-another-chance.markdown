@@ -70,7 +70,8 @@ TypeScript团队会在今后[致力于关注JavaScript](https://github.com/Micro
 事实上，TypeScript 是一种避免运行时类型检查的好方法。
 
 <br>
-** TypeScript 是一个开发/编译时的工具** — 它把标准的 JavaScript 加入了可选的类型提示，然后在产出时再移除。（它同样可以把ES6 和 ES7的特性转译成现在的标准）。
+
+**TypeScript 是一个开发/编译时的工具**  — 它把标准的 JavaScript 加入了可选的类型提示，然后在产出时再移除。（它同样可以把ES6 和 ES7的特性转译成现在的标准）。
 
 <br>
 TypeScript的类型提示给我们带来了所有类型的优点，然后再让类型提示消失。
