@@ -1,0 +1,631 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.3.1 by Michael Rose
+  Copyright 2017 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE.txt
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin SEO -->
+
+
+
+
+
+
+
+
+
+<title>是时候再给TypeScript一次机会了【译】 - Laolizi’s Blog</title>
+
+
+
+
+<meta name="description" content="      原文地址：It’s time to give TypeScript another chance    作者：Jason Dreyzehne    翻译人：李绍懿  ">
+
+
+
+
+<meta name="author" content="Laolizi">
+
+<meta property="og:locale" content="en">
+<meta property="og:site_name" content="Laolizi's Blog">
+<meta property="og:title" content="是时候再给TypeScript一次机会了【译】">
+
+
+
+
+  <meta property="og:description" content="      原文地址：It’s time to give TypeScript another chance    作者：Jason Dreyzehne    翻译人：李绍懿  ">
+
+
+
+
+
+  
+
+  
+
+
+
+  <meta property="og:image" content="/assets/ts-cover.png">
+
+
+
+  <meta property="og:type" content="article">
+  <meta property="article:published_time" content="2017-03-22T00:00:00+08:00">
+
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context" : "http://schema.org",
+      "@type" : "Person",
+      "name" : "Laolizi",
+      "url" : null,
+      "sameAs" : null
+    }
+  </script>
+
+
+
+
+
+
+<!-- end SEO -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Laolizi's Blog Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if lte IE 9]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+<meta http-equiv="cleartype" content="on">
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use http://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+  </head>
+
+  <body class="layout--single">
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+    <div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <a class="site-title" href="/">Laolizi's Blog</a>
+        <ul class="visible-links">
+          
+            
+            <li class="masthead__menu-item"><a href="https://github.com/dllglishaoyi">About</a></li>
+          
+        </ul>
+        <button><div class="navicon"></div></button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+    
+  
+
+
+
+
+
+
+
+<div class="page__hero"
+  style=" "
+>
+  
+    <img src="/assets/ts-cover.png" alt="是时候再给TypeScript一次机会了【译】" class="page__hero-image">
+  
+  
+</div>
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+<div itemscope itemtype="http://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="/assets/avatar.jpeg" class="author__avatar" alt="Laolizi" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name" itemprop="name">Laolizi</h3>
+    
+      <p class="author__bio" itemprop="description">
+        老李子果果
+      </p>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="http://schema.org/Place">
+          <i class="fa fa-fw fa-map-marker" aria-hidden="true"></i> <span itemprop="name">Being,China</span>
+        </li>
+      
+
+      
+
+      
+        <li>
+          <a href="mailto:dllglishaoi@gmail.com">
+            <meta itemprop="email" content="dllglishaoi@gmail.com" />
+            <i class="fa fa-fw fa-envelope-square" aria-hidden="true"></i> Email
+          </a>
+        </li>
+      
+
+      
+
+      
+        <li>
+          <a href="https://twitter.com/laolizi" itemprop="sameAs">
+            <i class="fa fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+        <li>
+          <a href="https://github.com/dllglishaoyi" itemprop="sameAs">
+            <i class="fa fa-fw fa-github" aria-hidden="true"></i> GitHub
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs">
+      <i class="fa fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="是时候再给TypeScript一次机会了【译】">
+    <meta itemprop="description" content="      原文地址：It’s time to give TypeScript another chance    作者：Jason Dreyzehne    翻译人：李绍懿  ">
+    <meta itemprop="datePublished" content="March 22, 2017">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 class="page__title" itemprop="headline">是时候再给TypeScript一次机会了【译】
+</h1>
+          
+            <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+
+
+  less than 1 minute read
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        <blockquote>
+  <ul>
+    <li>原文地址：<a href="https://medium.freecodecamp.com/its-time-to-give-typescript-another-chance-2caaf7fabe61#.n95889k54">It’s time to give TypeScript another chance</a></li>
+    <li>作者：Jason Dreyzehne</li>
+    <li>翻译人：<a href="https://github.com/dllglishaoyi">李绍懿</a></li>
+  </ul>
+</blockquote>
+
+<p>  自2012年起，TypeScript成为了一些相对结构化语言（像 C++ 或者 Java）的程序员转入JavaScript的一个流行的选择。但与此同时，它也受到了大量JS世界“原住民”们的无视。
+<br />
+<br />
+  你可能已经听说了Angular团队最近<a href="https://vsavkin.com/writing-angular-2-in-typescript-1fa77c78d8e8">为Angular 2 切换到了TypeScript</a>。其他很多团队诸如 <a href="https://github.com/ReactiveX/rxjs">RxJS</a>、
+<a href="https://blog.ionic.io/announcing-ionic-2-0-0-final/">Ionic</a>、
+<a href="https://cycle.js.org/">Cycle.js</a>、
+<a href="https://github.com/palantir/blueprint">Blueprint</a>、
+<a href="https://dojotoolkit.org/community/roadmap/vision.html">Dojo</a>、
+<a href="https://github.com/NativeScript/NativeScript">NativeScript</a>、
+<a href="https://github.com/palantir/plottable">Plottable</a>也这么做了。</p>
+
+<p>  倘若你已经接触 JavaScript/Node.js 有一段时间了，你很可能会认为上面这些项目的老大脑子进水了。或者他们可能已经被微软收买了。👀</p>
+
+<p><img src="/assets/ts-1.jpeg" alt="图片" />
+<br /></p>
+
+<h4 id="有类型的javascript">有类型的JavaScript？</h4>
+<p>对于刚接触这个讨论的人来说，理解JavaScript世界对类型的厌恶是很重要的。除了JS的便携性以外，简单也是JS之所以流行的一个重要因素。</p>
+
+<blockquote>
+  <p>“对于黑客来说，一门语言需要擅长编写各种他们想要的程序才够迷人。这意味着，它语言要擅长写一次性的程序。”—  Paul Graham （译者注：Paul Graham 是黑客与画家的作者，这段话在<a href="http://paulgraham.com/popular.html">《Being Popular》</a>这篇文章中提到过）</p>
+</blockquote>
+
+<p>对于选择JavaScript作为工具的开发者来说，他们这么做常常是因为JS的灵活性。没有标准库、很少的数据结构、无类型，JavaScript开发者在实施一些新想法的时候，不需要花费太多的时间去思考细节。</p>
+
+<p>一些语言诸如C++在程序需要一大堆数据结构和其余的信息时，可能是和JavaScript差异最明显的时候。很多JavaScript程序员（特别是上面提到的那种），各种传统的类、样板、类型让他们感到枯燥，而且类型转换降低了他们的开发效率。</p>
+
+<blockquote>
+  <p>“把你在过度保护编程语言中的疲惫、委屈，和蜷缩着对自由呼吸的渴望统统都交给我吧。”—JavaScript🕊️</p>
+</blockquote>
+
+<p>透过这个观点，很容易明白为什么很多JavaScript用户对会对带类型的JavaScript如此抵触。</p>
+
+<p><strong>这里有一些见解可能有助于缓解一些恐惧.</strong></p>
+
+<h4 id="typescript-是有更好代码纠错能力的-javascript">TypeScript 是有更好代码纠错能力的 JavaScript</h4>
+
+<p>有一个可能是最常见的顾虑，那就是认为TypeScript不是纯的JavaScript。这种观点认为：因为TypeScript是一个单独的语言，所以会被转译成一大坨某一天还需要被迫去调试的糟糕代码。</p>
+
+<p><img src="/assets/ts-2.png" alt="图片" /></p>
+<center style="font-size:12px;color:#9a9a9a">
+    很多人都对TypeScript是这个印象
+</center>
+<p><br /></p>
+
+<p>TypeScript 除了已被良好测试和广泛应用之外，还值得注意的是：基于你的配置，TypeScript代码事实上只会发生很少的“转译”（如果有的话）。TypeScript只是带了一些选项的Javascrip。</p>
+
+<p><img src="/assets/ts-3.png" alt="图片" /></p>
+
+<p><strong>TypeScript 就像一个高级的纠错器，能够检查文档，当代码没有按照预定意图使用时会发出警告。</strong></p>
+
+<p>它为未来使用你代码的用户提供了及时的反馈和更好的开发体验。这同样也是对新项目很好的测试——如果你的项目值得去检查纠正来强制遵循编码规范，你的项目很可能从 TypeScript 中获得持久的收益。</p>
+
+<p>TypeScript团队会在今后<a href="https://github.com/Microsoft/TypeScript/wiki/TypeScript-Design-Goals">致力于关注JavaScript</a>。以便当JavaScript加入稳定的特性时，TypeScript 会进行相应的匹配和调整。</p>
+
+<h4 id="typescript-消除了运行时开支">TypeScript 消除了运行时开支</h4>
+
+<p>另一个常见的错误观念就是 TypeScript 的类型检查会存在运行时环境中，这回带来复杂度和性能开支。</p>
+
+<p><br />
+事实上，TypeScript 是一种避免运行时类型检查的好方法。</p>
+
+<p><br /></p>
+
+<p><strong>TypeScript 是一个开发/编译时的工具</strong>  — 它把标准的 JavaScript 加入了可选的类型提示，然后在产出时再移除。（它同样可以把ES6 和 ES7的特性转译成现在的标准）。</p>
+
+<p><br />
+TypeScript的类型提示给我们带来了所有类型的优点，然后再让类型提示消失。</p>
+
+<p><br /></p>
+
+<p>剩下仅存在运行时中关于对象类型的线索，和标准的 JavaScript 特性是一样的。（例如，当你从原型创建一个新对象时，你可能会用 <em>instanceof</em> 来检查它的类型）。</p>
+
+<p><br />
+令人啼笑皆非的是，因为 JavaScript 并没有提供标准的开发时类型检查，很多 JavaScript 类库<strong>重新开发了它们自己的运行时类型检测系统</strong>。</p>
+
+<p><img src="/assets/ts-4.png" alt="图片" /></p>
+<center style="font-size:12px;color:#9a9a9a">
+    <a href="https://github.com/request/request">Request</a>类库中的运行时类型检查，它为用户在不正确的使用方法时提供了更好的debug体验。但它需要在运行时中需要更多的代码和更多的单元测试用例。<a href="https://github.com/request/request/blob/092e1e657326626da0b8ac4cfe8752751689313b/index.js#L43-L55">代码片段→</a>
+</center>
+<p><br /></p>
+
+<p>这并不是这些类库的初衷，但作为好的开发体验的一部分，保证用户能在犯错时能看见清晰可执行的错误信息是必要的。</p>
+
+<p><br />
+为了这个目标，很多类库在运行时大量检查传入方法的参数类型，然后抛出错误让开发者看见。</p>
+
+<p><br />
+<strong>这毫无疑问在两个世界都烂透了。</strong> 这些运行时的类型检查让重要代码变得臃肿、可读性变差、单元测试代码覆盖率达到100%的难度提升。</p>
+
+<p><img src="/assets/ts-5.png" alt="图片" /></p>
+<center style="font-size:12px;color:#9a9a9a">
+    <a href="https://github.com/bcoin-org/bcoin/">Bcoin</a>通过提供了运行时抛出有用的错误信息提升了开发体验。但运行时的类型检查加大了维护和测试成本。这要用 TypeScript 来做的话会更高效和有帮助。 <a href="https://github.com/bcoin-org/bcoin/blob/4e7df6ef875e5936bea5139d922871498b4d9586/lib/primitives/tx.js#L84-L123">代码片段→</a>
+</center>
+<p><br /></p>
+
+<p>不使用 Typescript 的话，不仅在开发时失去了类型检查，而且还可能经常把它带到运行时中。（我希望你能有100%的测试覆盖率。）</p>
+
+<p><br /></p>
+
+<p>当你使用 TypeScript 时，你给用户提供了一个更好的开发体验、减少了了运行时的类型检查（除非必须的场景，如用户输入），让你的代码单元测试更容易完全覆盖。</p>
+
+<p><br /></p>
+<h4 id="typescript-已由来已久">TypeScript 已由来已久</h4>
+
+<p>可能是因为以上提到的原因，当我第一次听说 TypeScript 时，我跑的远远的。而且它是微软出品，站在了“JavaScript精华”（较少结构）的对立面。</p>
+
+<p><br />
+但现在已经不再是2012年了。TypeScript 不是 JavaScript 的 <a href="https://en.wikipedia.org/wiki/Leaky_abstraction">抽象漏洞</a>，TypeScript 项目中有很多顶级的黑客和工程师。（我很钦佩微软能够把项目管理得这么好。）</p>
+
+<p><strong>自从 TypeScript 跟踪了 ECMAScript，使用 TypeScript 就不是把你的项目锁在了一门新语言中。</strong> 很多人还没有意识到这一点，所以听到这种观点并不罕见：</p>
+<blockquote>
+  <p>“维护一个 TypeScript 项目真难。”</p>
+</blockquote>
+
+<p>这对于我听起来就像：</p>
+
+<blockquote>
+  <p>“维护一个有代码检查纠错的项目真难。”</p>
+</blockquote>
+
+<p>如果你的项目出于某种原因要停止从 TypeScript 中收益了，你可以用编译器跑一下你的项目，用以把所有类型从你的代码库中移除。</p>
+
+<p><br /></p>
+
+<p>然后你就回到无类型的 JavaScript 了。</p>
+
+<h4 id="长话短说">长话短说</h4>
+<p>TypeScript 最近得到了很大的改进提升。如果你几年前就听说 TypeScript 了，但是在那以后却没有跟进，现在值得再看一看。</p>
+
+<h3 id="什么时候用-typescript">什么时候用 TypeScript</h3>
+
+<h4 id="angular-为什么是-typescript"><a href="https://vsavkin.com/writing-angular-2-in-typescript-1fa77c78d8e8">Angular: 为什么是 TypeScript?</a></h4>
+
+<p>一个关于Angular团队到底为什么要选择用TypeScript构建Angular 2简短的技术讨论。</p>
+
+<h4 id="所有应该在typescript中编写的js类库"><a href="http://staltz.com/all-js-libraries-should-be-authored-in-typescript.html">所有应该在TypeScript中编写的JS类库</a></h4>
+
+<p>一篇为什么Typescript用构建JS类库是个好主意的总结，由Cycle.js 的作者、RxJS贡献者分享。</p>
+
+<h4 id="深入-typescript为什么是-typescript"><a href="https://basarat.gitbooks.io/typescript/content/docs/why-typescript.html">深入 Typescript— 为什么是 TypeScript</a></h4>
+
+<p>一篇关于用TypeScript好处的总结。</p>
+
+<h3 id="学习-typescript">学习 TypeScript</h3>
+
+<h4 id="typescript教程"><a href="https://www.typescriptlang.org/docs/tutorial.html">Typescript教程</a></h4>
+
+<p>一篇 TypeScript 团队维护的简短教程。</p>
+
+<h4 id="typescript设计目标"><a href="https://github.com/Microsoft/TypeScript/wiki/TypeScript-Design-Goals">Typescript设计目标</a></h4>
+
+<p>一篇概括了TypeScript团队整体设计原则的wiki。</p>
+
+<p><img src="/assets/ts-6.png" alt="图片" /></p>
+
+<h4 id="typescript-starter"><a href="https://github.com/bitjson/typescript-starter">typescript-starter</a></h4>
+
+<p>一个开发JavaScript类库的脚手架工程。包含了单元测试、文档生成还有CommonJS和ES6模块引入（针对Node.js和浏览器环境）。</p>
+
+<p><br /></p>
+
+<p>我抱着改变观念的希望写了这篇文章。如果有什么我可以改进这篇文章的想法，请
+<a href="https://twitter.com/bitjson">告诉我</a>
+<br />
+如果你觉得这篇文章有趣的话，请分享并为我点赞♡，谢谢阅读！</p>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fa fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#typescript" class="page__taxonomy-item" rel="tag">TypeScript</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fa fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#javascript" class="page__taxonomy-item" rel="tag">JavaScript</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fa fa-fw fa-calendar" aria-hidden="true"></i> Updated:</strong> <time datetime="2017-03-22T00:00:00+08:00">March 22, 2017</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">Share on</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=是时候再给TypeScript一次机会了【译】 /javascript/give-typescript-another-chance/" class="btn btn--twitter" title="Share on Twitter"><i class="fa fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=/javascript/give-typescript-another-chance/" class="btn btn--facebook" title="Share on Facebook"><i class="fa fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://plus.google.com/share?url=/javascript/give-typescript-another-chance/" class="btn btn--google-plus" title="Share on Google Plus"><i class="fa fa-fw fa-google-plus" aria-hidden="true"></i><span> Google+</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=/javascript/give-typescript-another-chance/" class="btn btn--linkedin" title="Share on LinkedIn"><i class="fa fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/react/Introducing-React-Loadable/" class="pagination--pager" title="React Loadable简介[译]
+">Previous</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+    <div id="disqus_thread"></div>
+  </article>
+
+    <script>
+
+    /**
+    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+    /*
+    var disqus_config = function () {
+    this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+    this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    */
+    (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = 'https://laolizi.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+  
+  
+</div>
+
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+    
+    
+    
+      <li><a href="http://github.com/dllglishaoyi"><i class="fa fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+    
+    
+    <li><a href="/feed.xml"><i class="fa fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2017 Laolizi. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+      </footer>
+    </div>
+
+    <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+  </body>
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-56016287-1', 'auto');
+    ga('send', 'pageview');
+
+  </script>
+</html>

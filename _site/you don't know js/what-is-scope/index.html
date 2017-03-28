@@ -1,0 +1,687 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.3.1 by Michael Rose
+  Copyright 2017 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE.txt
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin SEO -->
+
+
+
+
+
+
+
+
+
+<title>第一章 什么是作用域 - Laolizi’s Blog</title>
+
+
+
+
+<meta name="description" content="在变量中保存值、读取或修改值的能力是几乎所有编程语言的基本范例之一。实际上，在变量中储存和读取值得能力给了程序域的概念。">
+
+
+
+
+<meta name="author" content="Laolizi">
+
+<meta property="og:locale" content="en">
+<meta property="og:site_name" content="Laolizi's Blog">
+<meta property="og:title" content="第一章 什么是作用域">
+
+
+
+
+  <meta property="og:description" content="在变量中保存值、读取或修改值的能力是几乎所有编程语言的基本范例之一。实际上，在变量中储存和读取值得能力给了程序域的概念。">
+
+
+
+
+
+  
+
+  
+
+
+
+
+
+  <meta property="og:type" content="article">
+  <meta property="article:published_time" content="2016-03-25T00:00:00+08:00">
+
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context" : "http://schema.org",
+      "@type" : "Person",
+      "name" : "Laolizi",
+      "url" : null,
+      "sameAs" : null
+    }
+  </script>
+
+
+
+
+
+
+<!-- end SEO -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Laolizi's Blog Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if lte IE 9]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+<meta http-equiv="cleartype" content="on">
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use http://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+  </head>
+
+  <body class="layout--single">
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+    <div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <a class="site-title" href="/">Laolizi's Blog</a>
+        <ul class="visible-links">
+          
+            
+            <li class="masthead__menu-item"><a href="https://github.com/dllglishaoyi">About</a></li>
+          
+        </ul>
+        <button><div class="navicon"></div></button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+    
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+<div itemscope itemtype="http://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="/assets/avatar.jpeg" class="author__avatar" alt="Laolizi" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name" itemprop="name">Laolizi</h3>
+    
+      <p class="author__bio" itemprop="description">
+        老李子果果
+      </p>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="http://schema.org/Place">
+          <i class="fa fa-fw fa-map-marker" aria-hidden="true"></i> <span itemprop="name">Being,China</span>
+        </li>
+      
+
+      
+
+      
+        <li>
+          <a href="mailto:dllglishaoi@gmail.com">
+            <meta itemprop="email" content="dllglishaoi@gmail.com" />
+            <i class="fa fa-fw fa-envelope-square" aria-hidden="true"></i> Email
+          </a>
+        </li>
+      
+
+      
+
+      
+        <li>
+          <a href="https://twitter.com/laolizi" itemprop="sameAs">
+            <i class="fa fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+        <li>
+          <a href="https://github.com/dllglishaoyi" itemprop="sameAs">
+            <i class="fa fa-fw fa-github" aria-hidden="true"></i> GitHub
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs">
+      <i class="fa fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="第一章 什么是作用域">
+    <meta itemprop="description" content="在变量中保存值、读取或修改值的能力是几乎所有编程语言的基本范例之一。实际上，在变量中储存和读取值得能力给了程序域的概念。">
+    <meta itemprop="datePublished" content="March 25, 2016">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 class="page__title" itemprop="headline">第一章 什么是作用域
+</h1>
+          
+            <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+
+
+  1 minute read
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        <p>在变量中保存值、读取或修改值的能力是几乎所有编程语言的基本范例之一。实际上，在变量中储存和读取值得能力给了程序域的概念。</p>
+
+<p>如果没有这个概念，程序可以运行一些任务，但是它们会非常受限和无趣。</p>
+
+<p>但是，变量概念在我们程序中的引入带来了我们接下来要解决的有趣问题：变量们都“生活”在哪里？换句话说，它们被储存在哪里？还有，最重要的是，我们的程序怎么在需要的时候找到它们？</p>
+
+<p>接下来要讨论的问题就是，怎么样很好地定义一套变量存储规则并且随后能够读取。我们把这套规则称之为：<em>作用域</em>。</p>
+
+<h2 id="编译原理">编译原理</h2>
+
+<p>它可以是显而易见的，但也可能是意想不到的，这取决于你跟各种语言交互的程度，尽管JavaScript通常被冠以动态和解释型语言的名号，但实际上它是一种编译型语言。但它相比各种传统编译型语言和分布式系统的编译结果而言，JavaScript并不是事先编译好的。</p>
+
+<p>然而，JavaScript引擎依然要做一些和传统语言编译器相同的步骤，有时复杂得可能超出我们的想象。</p>
+
+<p>对于传统编译型语言，源代码在执行前通常要经历三个步骤，姑且称之为<em>编译</em>：</p>
+
+<p>1.<em>标记&amp;词法分析</em>：
+        把字符串拆分成一系列被称为“tokens”的有意义片段。比如，程序语句：var a = 2;。会被拆分为以下标记（token）：“var”,“a”,“=”,“2”,“;”。空格根据其是否有意义来决定是否被生成标记。</p>
+
+<p><strong>注释</strong>：标记和词法分析的区别比较微妙而且比较专业，核心在于token被标记为无状态（stateless）和有状态（statsful）的方式。简单来说，如果标记解析器行使有状态解析规则用以指出a是否为一个标记或者其他标记的一部分，那么这就是词法分析。</p>
+
+<p>2.<em>解析</em>：
+	解析过程就是把标记流转化为一棵树，这棵树是嵌套元素格式的，并且符合程序的语法结构。
+这棵树被称为”AST” (虚拟语法树)。
+	对于var a = 2;的语法树，以一个被称为“变量声明”的顶级节点开始，包含两个子节点，一个叫做标识符（值为“a”），另一个子节点叫做赋值表达式，并且这个赋值表达式节点包含其自己的一个子节点，叫做数字字面值（值为“2”）。</p>
+
+<p>3.<em>代码生成</em>：
+	这就是把虚拟语法树生成可执行代码的过程。对于不同的程序语言和平台，这个过程会有很大的不同。
+因此，相比于陷入具体细节的泥潭，只要知道，var a = 2;的语法树最终会被转化为一系列机器指令，负责创建一个变量a并吧一个值储存在变量a中。</p>
+
+<p><strong>注释</strong>：介于JS引擎如何管理系统资源比起我们要讨论的话题太过深入，我们只要知道JS引擎有能力按需存储变量就好了。</p>
+
+<p>JavaScript引擎和其他大多数语言一样，要做的事实际上是要比以上三步复杂得多的。举个例子，在解析和代码生成的过程中，有一些诸如合并冗余元素的优化步骤。</p>
+
+<p>所以我在这里只是粗略概括了一下，但我想你会很快看到，为什么我们做的这些细节，即使你在一个很高的水平，都是相关的。
+有一点要注意，JavaScript引擎并没有像其他语言编译器一样，奢侈的话费大量时间去做优化，因为JavaScript不会像其他语言一样在构建前完成编译。
+JavaScript在很多时候，从代码的编译到执行只需要几微秒甚至更少的时间！为了确保最快的性能，JavaScript用到了各种各样的技巧（例如JITS，用于懒编译甚至热重编），这些已经超出了这里要讨论“域”的范畴。
+简单起见，我们只需要知道任何JavaScript代码片段在执行前都需要编译。因此var a = 2;也不例外。</p>
+
+<p>理解作用域
+在学习作用域的路上，需要理解会话的过程，但什么是会话呢？
+角色们
+让我们先见识一下在与var a = 2;交互的过程中，有哪些角色参与其中吧，这样我们就能很快理解他们之间的会话了：
+	1.引擎：负责JavaScript程序从头到尾的编译和执行。
+	2.编译器:引擎的朋友之一，负责处理一下诸如解析和代码生成的脏活累活。
+	3.作用域：引擎的另一个朋友，负责收集和管理所有已声明变量的查找表，并且强制用一套严	   格的规则让他们可被正运行的代码取得。</p>
+
+<p>为了让你完全理解JavaScript是如何运作的，你需要像引擎和他的朋友们一样去思考，问它们会问的问题，并且能够回答它们。</p>
+
+<p>来来回回
+当你看到var a = 2;这段程序时，你很可能把它理解成一个声明语句。但我们的朋友引擎可不这么想。事实上，引擎看到了两个不同的声明，一个是编译器将会在编译阶段处理的，另一个则由引擎在执行阶段处理。
+那么，就让我们来看看引擎和它的朋友们到底是怎么处理var a = 2;的吧。</p>
+
+<p>编译器首先要对这段程序做进行词法分析，转化为一系列标记，然后把标记生成语法树。但当编译器要做代码生成时，它对程序的处理会比假设的有一些不同。</p>
+
+<p>编译器假定的代码生成过程是这样的：
+	为变量分配内存空间
+	把变量标记为a
+	然后把2赋值给变量
+遗憾的是，这个过程并不准确。</p>
+
+<p>而确切的过程是这样的：
+	1.当遇到 var a 时，编译器会询问作用域是否有一个变量a已经存在其中。如果有，编译器会忽略这个声明。反之，编译器会要求作用域在其中声明一个名叫a的变量。
+	2.编译器随后会为引擎生成a = 2的可执行代码。引擎在执行这些代码的时候会首先询问当前作用域是否有一个可达到的变量a。如果有，就使用这个变量。如果没有，引擎将会去别处寻找（见下文嵌套作用域部分）。</p>
+
+<p>如果引擎最终找到a变量，就会给它赋值2。反之引擎会报错。</p>
+
+<p>变量操作的两个动作总结为：第一，编译器声明一个变量（如果在当前作用域没声明过的话）。第二，代码执行阶段，引擎如果在作用域中找到变量，就为其赋值。</p>
+
+<p>聊聊编译器
+我们需要几个专业术语以便更深入理解。
+在第二部中，引擎执行编译器的产出代码时需要找到是否有被声明的变量a，这个查找是在作用域中进行的。引擎的类型会影响查找结果。</p>
+
+<p>在我们的例子中，引擎查找a变量时，表现为“LHS”型。另一种查找类型被称为“RHS”。</p>
+
+<p>我打赌你已经猜出了 “L” 和 “R”的含义。这两个术语分别代表了”Left-hand Side” （左手边）和 “Right-hand Side”（右手边）。</p>
+
+<p>“边”又是什么意思？代表从那边开始赋值操作。
+换句话说 “LHS”型的查找将会在变量出现在赋值操作的左边时完成。“LHS”型则反之。
+“RHS”型查找其实在我们这么简单的目的（找到某些变量的值）中表现得比较模糊，然而LHS负责找到变量以便赋值。在这种情况下，RHS并不真正意味着“赋值表达式的右边”，而意味着“不在左边”。</p>
+
+<p>你可以简单认为RHS意味着取值。</p>
+
+<p>让我们深入一些讨论：
+现有代码：</p>
+<div class="language-js highlighter-rouge"><pre class="highlight"><code>	<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span> <span class="nx">a</span> <span class="p">);</span>
+</code></pre>
+</div>
+<p>这是一个RHS引用，因为a并没有在这里赋值。我们在这里找到并取出变量a的值，以便把值传给console.log(..)。
+另一种情况：
+a = 2;
+对于a是LHS的引用，因为我们并不关心它现在的值，我们只是想找到=2表达式的赋值目标。</p>
+
+<p>备注： LHS 和 RHS代表在赋值的左/右边，并不一定要在=号的左/右边。有几种赋值的方式，所以这两个概念被定义为：“赋值的目标（LHS）”和“赋值的来源（RHS）”。</p>
+
+<p>一下的程序同时涵盖了 LHS 和 RHS 引用：
+function foo(a) {
+    console.log( a ); // 2
+}</p>
+
+<p>foo( 2 );</p>
+
+<p>最后一行调用了foo(..)，需要获得foo的RHS，意味着，“查找foo的值
+，然后把它给我”。此外(..)表明foo的值需要被执行，所以它最好是一个方法！</p>
+
+<p>这其中有一个细微却很重要的赋值，你发现了吗？
+你可能会忽略其中a=2的含蓄代码片段。它发生在2被当做参数传给foo(..)方法时，这个时候，参数a被赋值2。给a（含蓄的）赋值时，LHS查找发生了。</p>
+
+<p>其中也有值a的RHS引用，其值被传给了console.log(..)。console.log(..)执行需要一个引用。这就是console对象的RHS查找，然后再看它是否存在一个叫做log的属性方法。</p>
+
+<p>最后，把值2（通过变量a的RHS查找获得）传入log(..)的过程我们可以概念化为有LHS/RHS交换。抛开log(..)实际的原生实现，我们可以假设它有一些参数，其中第一个（可能被叫做arg1）在被赋值2之前有一次LHS引用查找。</p>
+
+<p>不管怎样，细微但重要的差别在于，编译器在代码生成阶段，需要处理声明和值得定义，而引擎在代码执行阶段，把一个方法赋值给foo并不是必要的。因此，在我们的讨论中，真的不必要吧方法声明看作是LHS查找赋值。</p>
+
+<p>引擎/作用域的对话</p>
+
+<p>function foo(a) {
+    console.log( a ); // 2
+}</p>
+
+<p>foo( 2 );</p>
+
+<p>让我们把上面的交换（代码片段的执行过程）想象成一次对话。这段对话可能会是这样：</p>
+
+<p>引擎：嘿，作用域，我有一个foo的RHS引用。听说过吗？</p>
+
+<p>作用域: 当然。编译器一秒前刚声明过，是一个方法。</p>
+
+<p>引擎：太棒了，谢谢！我正在执行foo。</p>
+
+<p>引擎：嘿，作用域，我有一个a的LHS引用。听说过吗？</p>
+
+<p>作用域: 当然。编译器刚把它声明为一个形参。</p>
+
+<p>引擎: 一如既往的有帮助呀，作用域，再次感谢。现在是时候给a赋值2了。</p>
+
+<p>引擎：嘿，作用域，抱歉又来烦你了。我需要一个console的RHS查找，听说过吗？</p>
+
+<p>作用域: 没问题，引擎，这是我每天做的事。好，我找到console了，</p>
+
+<p>引擎：完美。找下log(..)。好的，他是个function。</p>
+
+<p>引擎：Yo，作用域。我需要a的RHS引用。我觉得我记住它了，你只要帮我确认一下它没变化就好了。</p>
+
+<p>作用域：是的，它没变。</p>
+
+<p>引擎：酷。把a的值给我一下，它是2，放到log(..)里去
+…</p>
+
+<p>小测验
+检测一下你到目前为止的理解程度。确保你掌握了引擎和其与作用域之间的“对话”。</p>
+
+<p>function foo(a) {
+    var b = a;
+    return a + b;
+}</p>
+
+<p>var c = foo( 2 );</p>
+
+<ol>
+  <li>找出所有的LHS查找（一共三个） </li>
+  <li>找出所有的RHS查找（一共四个） 
+注释: 答案在后面的回顾章节中</li>
+</ol>
+
+<p>嵌套作用域
+我们说过作用域是一套根据标识符名查找变量的规则。但我们往往要考虑多个作用域。就像一个函数内嵌了另一个函数，作用域也会被嵌套在别的作用域当中。所以，如果一个变量无法在当前作用域中找到，引擎就会去外层包裹的作用域中查找，直至找到变量或者已达最外层作用域。</p>
+
+<p>且看以下代码:
+function foo(a) {
+    console.log( a + b );
+}</p>
+
+<p>var b = 2;</p>
+
+<p>foo( 2 ); // 4</p>
+
+<p>b的RHS引用无法在foo方法中被找到，但可以在其外层作用域（在这个例子中，是全局作用域）找到。</p>
+
+<p>所以，引擎和作用域间的对话会是这样：</p>
+
+<p>引擎：“嘿，foo的作用域，你知道b吗？我需要一个它的RHS引用。”
+作用域：“没听过。自己想办法吧。”
+引擎：“嘿，foo外层的作用域，原来你是全局作用域呀，真酷。你知道b吗？我需要一个它的RHS引用。”
+作用域：“有的，拿去用吧。”</p>
+
+<p>穿越作用域的规则很简单：引擎从当前作用域开始寻找变量，若没找到，就进入上一级作用域，重复此步骤。如果到达最外层的全局作用域，搜索停止，不管是否找到变量。</p>
+
+<p>比作楼房</p>
+
+<p>为了使嵌套作用域更加形象，我希望你把它想成一栋高楼。</p>
+
+<p>￼</p>
+
+<p>这栋楼房相当于我们程序中作用域的规则。一楼就是你当前所处的作用域，顶层就是全局作用域。
+你在当前楼层中找LHS和 RHS 引用，如果没有找到，坐电梯上一层接着找，重复这个过程。当你上到顶楼（全局作用域）时，不管有没有找到想要的东西，你都得停下来了。</p>
+
+<p>错误</p>
+
+<p>为什么要在乎叫做LHS还是RHS？</p>
+
+<p>因为这两种查找在变量未声明的时候（在所有询问的作用域中都没有找到）表现为不同的行为。</p>
+
+<p>且看：</p>
+
+<p>function foo(a) {
+    console.log( a + b );
+    b = a;
+}</p>
+
+<p>foo( 2 );</p>
+
+<p>查找变量b时RHS查找被首次触发，这时b就是一个未声明的变量，因为在作用域中找不到它。</p>
+
+<p>如果一个RHS查找变量失败了，包括在嵌套的作用域中，这样会导致一个ReferenceError 错误被引擎抛出。知道这个错误是ReferenceError类型的非常重要。</p>
+
+<p>相比之下，如果引擎在做一个LHS查找的时候到达了顶楼却没有找到目标变量，而程序并不在“严格模式下”运行，全局作用域中就会自动创建一个相应名字的变量，并把它交给引擎。</p>
+
+<p>“没有你想要的变量，但能干的我会帮你创建一个。”</p>
+
+<p>“严格模式”，在ES5中加入的特性，一种相较于正常/宽松/懒模式有很多不同行为的模式。其中的一个行为表现就是禁止全局变量的自动创建。全局模式在上面的例子中，LHS查找就得不到一个全局变量，引擎就会抛出一个ReferenceError错误。</p>
+
+<p>现在，如果一个变量被RHS查找到了，但你尝试把它当做一些不可能的值来操作，类似把一个非函数当做函数来执行，或者对null/undefined引用属性，引擎就会抛出另一个类型的错误，叫做TypeError。ReferenceError是跟作用域查找失败有关的，而TypeError暗示了作用域查找成功，但把结果当做一个非法/不可能的值来处理了。</p>
+
+<p>回顾</p>
+
+<p>作用域就是一系列规定变量如何被找到的规则。查找可以是为了赋值，这就是LHS引用，也可以是为了取值，即RHS引用。</p>
+
+<p>LHS引用了赋值操作的结果。基于作用域的赋值既能在使用=操作符时发生，也能在把参数传给方法时发生。</p>
+
+<p>JavaScript引擎会在代码执行前编译， var a = 2;在这个过程中会被分两步拆分：
+	1.首先，var a会在作用域中声明变量。它会在被执行前提升到作用域最前端。
+	2.然后，a = 2回去查找变量（LHS引用），并且找到后赋值。</p>
+
+<p>LHS 和 RHS引用查找都会在当前执行的作用域中开始，如果需要的话，它们的工作会延伸到外层嵌套的作用域，每次在一个作用域中查找，直至顶层。</p>
+
+<p>RHS查找不成功会抛出ReferenceErrors错误，LHS查找不成功则会创建相应的全局变量（非严格模式），或者也抛出ReferenceError错误（严格模式下）。</p>
+
+<p>测试答案
+function foo(a) {
+    var b = a;
+    return a + b;
+}</p>
+
+<p>var c = foo( 2 );</p>
+
+<p>1.找出所有的LHS查找（一共三个）
+	c = ..， a = 2 (隐晦的参数赋值) ， b = .. 
+2.找出所有的RHS查找（一共四个）
+	foo(2..， = a;， a + .. ， .. + b </p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fa fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#javascript" class="page__taxonomy-item" rel="tag">JavaScript</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fa fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#you-don-t-know-js" class="page__taxonomy-item" rel="tag">You Don't Know JS</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fa fa-fw fa-calendar" aria-hidden="true"></i> Updated:</strong> <time datetime="2016-03-25T00:00:00+08:00">March 25, 2016</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">Share on</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=第一章 什么是作用域 /you%20don't%20know%20js/what-is-scope/" class="btn btn--twitter" title="Share on Twitter"><i class="fa fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=/you%20don't%20know%20js/what-is-scope/" class="btn btn--facebook" title="Share on Facebook"><i class="fa fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://plus.google.com/share?url=/you%20don't%20know%20js/what-is-scope/" class="btn btn--google-plus" title="Share on Google Plus"><i class="fa fa-fw fa-google-plus" aria-hidden="true"></i><span> Google+</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=/you%20don't%20know%20js/what-is-scope/" class="btn btn--linkedin" title="Share on LinkedIn"><i class="fa fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/you%20don't%20know%20js/functionvsblockscope/" class="pagination--pager" title="第三章: 函数 vs. 块级作用域
+">Previous</a>
+    
+    
+      <a href="/react/Introducing-React-Loadable/" class="pagination--pager" title="React Loadable简介[译]
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+    <div id="disqus_thread"></div>
+  </article>
+
+    <script>
+
+    /**
+    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+    /*
+    var disqus_config = function () {
+    this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+    this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    */
+    (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = 'https://laolizi.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+  
+  
+</div>
+
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+    
+    
+    
+      <li><a href="http://github.com/dllglishaoyi"><i class="fa fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+    
+    
+    <li><a href="/feed.xml"><i class="fa fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2017 Laolizi. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+      </footer>
+    </div>
+
+    <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+  </body>
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-56016287-1', 'auto');
+    ga('send', 'pageview');
+
+  </script>
+</html>
