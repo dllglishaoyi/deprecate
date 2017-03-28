@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
-<loc>http://localhost:4000/you%20don't%20know%20js/functionvsblockscope/</loc>
+<loc>/you%20don't%20know%20js/functionvsblockscope/</loc>
 <lastmod>2016-03-16T00:00:00+08:00</lastmod>
 </url>
 <url>
-<loc>http://localhost:4000/you%20don't%20know%20js/what-is-scope/</loc>
+<loc>/you%20don't%20know%20js/what-is-scope/</loc>
 <lastmod>2016-03-25T00:00:00+08:00</lastmod>
 </url>
 <url>
-<loc>http://localhost:4000/react/Introducing-React-Loadable/</loc>
+<loc>/react/Introducing-React-Loadable/</loc>
 <lastmod>2017-03-14T00:00:00+08:00</lastmod>
 </url>
 <url>
-<loc>http://localhost:4000/javascript/give-typescript-another-chance/</loc>
+<loc>/javascript/give-typescript-another-chance/</loc>
 <lastmod>2017-03-22T00:00:00+08:00</lastmod>
 </url>
 <url>
-<loc>http://localhost:4000/%E5%89%8D%E7%AB%AF%E5%B7%A5%E5%85%B7/webpack-bits-getting-the-most-out-of-the-commonschunkplugin/</loc>
+<loc>/%E5%89%8D%E7%AB%AF%E5%B7%A5%E5%85%B7/webpack-bits-getting-the-most-out-of-the-commonschunkplugin/</loc>
 <lastmod>2017-03-28T10:01:53+08:00</lastmod>
 </url>
 <url>
-<loc>http://localhost:4000/</loc>
+<loc>/</loc>
 </url>
 </urlset>

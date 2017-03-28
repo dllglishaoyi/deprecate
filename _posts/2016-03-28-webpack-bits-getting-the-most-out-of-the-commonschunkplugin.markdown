@@ -1,5 +1,5 @@
 ---
-title: "webpack 小札: 充分利用 CommonsChunkPlugin()"
+title: "webpack 小札: 充分利用 CommonsChunkPlugin()【译】"
 categories:
   - 前端工具
 tags:
