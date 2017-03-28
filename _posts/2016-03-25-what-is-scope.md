@@ -1,8 +1,9 @@
 ---
-layout: post
-title:  "第一章 什么是作用域"
-date:   2016-03-25 14:01:53 +0800
-categories: jekyll update
+title: "第一章 什么是作用域"
+categories:
+  - You Don't Know JS
+tags:
+  - JavaScript
 ---
 
 在变量中保存值、读取或修改值的能力是几乎所有编程语言的基本范例之一。实际上，在变量中储存和读取值得能力给了程序域的概念。
@@ -251,17 +252,8 @@ function foo(a) {
 }
 
 var c = foo( 2 );
-	
+
 1.找出所有的LHS查找（一共三个）
-	c = ..， a = 2 (隐晦的参数赋值) ， b = .. 	
+	c = ..， a = 2 (隐晦的参数赋值) ， b = .. 
 2.找出所有的RHS查找（一共四个）
 	foo(2..， = a;， a + .. ， .. + b 
-
-
-
-
-
-
-
-
-

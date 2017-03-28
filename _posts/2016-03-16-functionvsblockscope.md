@@ -1,8 +1,9 @@
 ---
-layout: post
-title:  "第三章: 函数 vs. 块级作用域"
-date:   2016-03-30 14:01:53 +0800
-categories: jekyll update
+title: "第三章: 函数 vs. 块级作用域"
+categories:
+  - You Don't Know JS
+tags:
+  - JavaScript
 ---
 
 # 你不知道的JS:作用域和闭包
@@ -204,7 +205,7 @@ console.log( a ); // 2
 
 对比前面的两段代码。第一段中的`foo`在环绕作用域中绑定。第二段中，`foo`不在环绕作用域中绑定，而是在他自己内部的方法中绑定。
 
-换句话说，`(function foo(){ .. })` 是一个表达式意味着`foo`标识符 *只能*在`..`的内部被找到，而不能在外部作用域中找到。 
+换句话说，`(function foo(){ .. })` 是一个表达式意味着`foo`标识符 *只能*在`..`的内部被找到，而不能在外部作用域中找到。
 
 In other words, `(function foo(){ .. })` as an expression means the identifier `foo` is found *only* in the scope where the `..`。 把`foo`的名字隐藏在它自己内部意味着它不会无故的污染环绕作用域。
 

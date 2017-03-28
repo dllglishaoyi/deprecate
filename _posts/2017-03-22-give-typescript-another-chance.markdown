@@ -1,14 +1,16 @@
 ---
-layout: post
-title:  "是时候再给TypeScript一次机会了【译】"
-date:   2017-03-22 10:01:53 +0800
-categories: jekyll update
+title: "是时候再给TypeScript一次机会了【译】"
+header:
+  image: /assets/ts-cover.png
+categories:
+  - JavaScript
+tags:
+  - TypeScript
 ---
+
 > * 原文地址：[It’s time to give TypeScript another chance](https://medium.freecodecamp.com/its-time-to-give-typescript-another-chance-2caaf7fabe61#.n95889k54)
 * 作者：Jason Dreyzehne
 * 翻译人：[李绍懿](https://github.com/dllglishaoyi)
-
-![图片](/assets/ts-cover.png)
 
 &emsp;&emsp;自2012年起，TypeScript成为了一些相对结构化语言（像 C++ 或者 Java）的程序员转入JavaScript的一个流行的选择。但与此同时，它也受到了大量JS世界“原住民”们的无视。
 <br>

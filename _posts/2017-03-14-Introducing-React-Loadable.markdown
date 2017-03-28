@@ -1,9 +1,11 @@
 ---
-layout: post
-title:  "React Loadable简介[译]"
-date:   2017-03-14 12:01:53 +0800
-categories: jekyll update
+title: "React Loadable简介[译]"
+categories:
+  - React
+tags:
+  - React
 ---
+
 > * 原文地址：[Introducing React Loadable](https://medium.com/@thejameskyle/react-loadable-2674c59de178)
 * 作者：james kyle
 * 翻译人：李绍懿
