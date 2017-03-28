@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
-<loc>/you%20don't%20know%20js/functionvsblockscope/</loc>
+<loc>http://localhost:4000/you%20don't%20know%20js/functionvsblockscope/</loc>
 <lastmod>2016-03-16T00:00:00+08:00</lastmod>
 </url>
 <url>
-<loc>/you%20don't%20know%20js/what-is-scope/</loc>
+<loc>http://localhost:4000/you%20don't%20know%20js/what-is-scope/</loc>
 <lastmod>2016-03-25T00:00:00+08:00</lastmod>
 </url>
 <url>
-<loc>/react/Introducing-React-Loadable/</loc>
+<loc>http://localhost:4000/react/Introducing-React-Loadable/</loc>
 <lastmod>2017-03-14T00:00:00+08:00</lastmod>
 </url>
 <url>
-<loc>/javascript/give-typescript-another-chance/</loc>
+<loc>http://localhost:4000/javascript/give-typescript-another-chance/</loc>
 <lastmod>2017-03-22T00:00:00+08:00</lastmod>
 </url>
 <url>
-<loc>/</loc>
+<loc>http://localhost:4000/</loc>
 </url>
 </urlset>
