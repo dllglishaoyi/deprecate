@@ -1,4 +1,179 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="http://jekyllrb.com" version="3.4.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2017-03-28T16:29:27+08:00</updated><id>http://localhost:4000/</id><title type="html">Laolizi’s Blog</title><subtitle>An amazing website.</subtitle><author><name>Laolizi</name><email>dllglishaoi@gmail.com</email></author><entry><title type="html">是时候再给TypeScript一次机会了【译】</title><link href="http://localhost:4000/javascript/give-typescript-another-chance/" rel="alternate" type="text/html" title="是时候再给TypeScript一次机会了【译】" /><published>2017-03-22T00:00:00+08:00</published><updated>2017-03-22T00:00:00+08:00</updated><id>http://localhost:4000/javascript/give-typescript-another-chance</id><content type="html" xml:base="http://localhost:4000/javascript/give-typescript-another-chance/">&lt;blockquote&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="http://jekyllrb.com" version="3.4.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2017-03-28T22:51:17+08:00</updated><id>http://localhost:4000/</id><title type="html">Laolizi’s Blog</title><subtitle>An amazing website.</subtitle><author><name>Laolizi</name><email>dllglishaoi@gmail.com</email></author><entry><title type="html">webpack 小札: 充分利用 CommonsChunkPlugin()</title><link href="http://localhost:4000/%E5%89%8D%E7%AB%AF%E5%B7%A5%E5%85%B7/webpack-bits-getting-the-most-out-of-the-commonschunkplugin/" rel="alternate" type="text/html" title="webpack 小札: 充分利用 CommonsChunkPlugin()" /><published>2017-03-28T10:01:53+08:00</published><updated>2017-03-28T10:01:53+08:00</updated><id>http://localhost:4000/%E5%89%8D%E7%AB%AF%E5%B7%A5%E5%85%B7/webpack-bits-getting-the-most-out-of-the-commonschunkplugin</id><content type="html" xml:base="http://localhost:4000/%E5%89%8D%E7%AB%AF%E5%B7%A5%E5%85%B7/webpack-bits-getting-the-most-out-of-the-commonschunkplugin/">&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;原文地址：&lt;a href=&quot;https://medium.com/webpack/webpack-bits-getting-the-most-out-of-the-commonschunkplugin-ab389e5f318#.o691521qn&quot;&gt;webpack bits: Getting the most out of the CommonsChunkPlugin()&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;作者：Sean T. Larkin&lt;/li&gt;
+    &lt;li&gt;翻译人：&lt;a href=&quot;https://github.com/dllglishaoyi&quot;&gt;李绍懿&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;webpack 核心团队喜欢不时地参与到Twitter社区中，通过&lt;a href=&quot;https://twitter.com/TheLarkInn/status/842817690951733248&quot;&gt;一些有趣并且有营养的方式分享知识&lt;/a&gt;。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/demo.gif&quot; alt=&quot;图片&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/20170328/twitter1.png&quot; alt=&quot;图片&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;这一次，“游戏规则”很简单。安装 webpack-bundle-analyzer ，生成一张精美多彩的图片，包含了你所有的bundle，然后分享给我。作为回报，webpack团队会帮你指出一些我们能辨认的潜在问题。&lt;/p&gt;
+
+&lt;h2 id=&quot;我们发现了什么&quot;&gt;我们发现了什么？&lt;/h2&gt;
+
+&lt;p&gt;最常见的问题就是代码重复：重复的类库、组件、代码存在于多个（同步或异步）的bundle里！&lt;/p&gt;
+
+&lt;h2 id=&quot;例子1很多带有重复代码的-vendor-bundle&quot;&gt;例子1：很多带有重复代码的 vendor bundle&lt;/h2&gt;
+&lt;p&gt;&lt;br /&gt;
+&lt;img src=&quot;/assets/20170328/case1.png&quot; alt=&quot;图片&quot; /&gt;
+&lt;img src=&quot;/assets/20170328/twitter2.png&quot; alt=&quot;图片&quot; /&gt;&lt;/p&gt;
+&lt;center style=&quot;font-size:12px;color:#9a9a9a&quot;&gt;
+    这是一个典型例子。Swizec谢谢你让我分享它。
+&lt;/center&gt;
+&lt;p&gt;&lt;br /&gt;
+&lt;a href=&quot;https://medium.com/@swizec&quot;&gt;Swizec Teller&lt;/a&gt;人很好，分享了他的一个构建（实际上是包含了8-9个独立单页的应用）。我从中挑选了这个例子因为可以从中辨认出很多很棒的技术。让我们具体来看看：
+&lt;br /&gt;
+&lt;br /&gt;
+&lt;img src=&quot;/assets/20170328/case1.png&quot; alt=&quot;图片&quot; /&gt;&lt;/p&gt;
+&lt;center style=&quot;font-size:12px;color:#9a9a9a&quot;&gt;
+    除了“FoamTree”图表之外都是应用的代码，与此同时，所有用了node_modules资源的部分都以&quot;\_vendor.js&quot; 结尾
+&lt;/center&gt;
+&lt;p&gt;&lt;br /&gt;
+我们可以从中推断出不少东西（在不看具体配置的情况下）。
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;每个单页应用都仅仅在入口和vendor代码中用了 &lt;em&gt;CommonsChunkPlugin&lt;/em&gt; 插件。这创建了一个只包含来自node_modules文件代码的bundle，并且其他的bundle只包含了应用代码。以下是部分相关配置：
+&lt;img src=&quot;/assets/20170328/twitter3.png&quot; alt=&quot;图片&quot; /&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;nb&quot;&gt;Object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;keys&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;activeApps&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;map&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;app&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;webpack&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;optimize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;CommonsChunkPlugin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;app&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;_vendor&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;chunks&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;app&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;minChunks&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;isVendor&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}))&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;&lt;em&gt;activeApps&lt;/em&gt; 变量代表了每个独立的入口点。&lt;/p&gt;
+
+&lt;h2 id=&quot;机会区域&quot;&gt;机会区域&lt;/h2&gt;
+
+&lt;p&gt;下面是我圈出来可以做一些改善的区域。
+&lt;br /&gt;
+&lt;br /&gt;
+&lt;img src=&quot;/assets/20170328/case1_2.png&quot; alt=&quot;图片&quot; /&gt;&lt;/p&gt;
+&lt;h2 id=&quot;元-缓存&quot;&gt;“元” 缓存&lt;/h2&gt;
+
+&lt;p&gt;我们上面看到的是各种诸如 momentjs, lodash 和 jquery 的庞大类库穿插在6个甚至更多的vendor bundle中使用。把所有vendor打包到一个单独bundle的策略固然是好的，但我们也应该相同的策略应用到所有的 vendor bundle内部。&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;webpack&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;optimize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;CommonsChunkPlugin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;children&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;minChunks&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;这相当于我们告诉webpack:&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;嘿，webpack, 看看所有的 chunk （包括已生成的vendor），然后把出现在6个以上chunk中的模块放到一个单独的文件中。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/20170328/case1_3.jpg&quot; alt=&quot;图片&quot; /&gt;
+&lt;img src=&quot;/assets/20170328/twitter4.png&quot; alt=&quot;图片&quot; /&gt;&lt;/p&gt;
+&lt;center style=&quot;font-size:12px;color:#9a9a9a&quot;&gt;
+    在这个例子中这个文件似乎被命名为“manifest.js”
+&lt;/center&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/20170328/twitter5.png&quot; alt=&quot;图片&quot; /&gt;
+&lt;br /&gt;
+&lt;br /&gt;
+正如你所见，所有的特定模块被抽离到一个独立的文件，并且据
+Swizec说，这让他们的应用大小整体下降了17%!&lt;/p&gt;
+&lt;h2 id=&quot;例子2异步-chunk-之间的重复-vendor&quot;&gt;例子2：异步 chunk 之间的重复 vendor&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/20170328/twitter6.png&quot; alt=&quot;图片&quot; /&gt;&lt;/p&gt;
+&lt;center style=&quot;font-size:12px;color:#9a9a9a&quot;&gt;
+    这是个令人印象深刻的代码拆分用法。瞧瞧这些漂亮的颜色 💓
+&lt;/center&gt;
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;
+所以这个代码的重复量相对整体代码不那么严重吧，然而，当你看到下面全量代码体积的图时，你会发现有三个同样的模块存在于每个异步chunk中。
+&lt;br /&gt;
+&lt;br /&gt;
+&lt;img src=&quot;/assets/20170328/case2.jpeg&quot; alt=&quot;图片&quot; /&gt;&lt;/p&gt;
+&lt;center style=&quot;font-size:12px;color:#9a9a9a&quot;&gt;
+    异步chunk就是文件名为“[number].[number].js”的文件
+&lt;/center&gt;
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;
+正如你在上面看见的，有2，3个相同的组件用到了四五十个异步bundle中。那么我们怎么通过 &lt;em&gt;CommonsChunkPlugin&lt;/em&gt; 解决这个问题呢？&lt;/p&gt;
+&lt;h2 id=&quot;创建异步的-commons-chunk&quot;&gt;创建异步的 Commons Chunk&lt;/h2&gt;
+&lt;p&gt;这个技术和第一个非常相似，我们要把配置文件中的 &lt;em&gt;async&lt;/em&gt; 属性设为 &lt;em&gt;true&lt;/em&gt; ，像这样：&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;webpack&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;optimize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;CommonsChunkPlugin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;async&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;children&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;filename&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;commonlazy.js&quot;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;用同样的方式 - webpack 会扫码所有的 chunk 来查找通用模块。当async为true时，只有拆分代码的bundle才会被扫描。
+由于我们并没有指定&lt;em&gt;minChunks&lt;/em&gt;，所以默认值是3。webpack相当于被告知：&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;嘿，webpack, 查看所有的常规（又称懒加载）chunk，如果你找到了出现在3个以上chunk中的相同模块，那么请把它抽离到一个单独的异步通用chunk中。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;最终的结果就是：
+&lt;img src=&quot;/assets/20170328/case2_2.jpg&quot; alt=&quot;图片&quot; /&gt;
+&lt;img src=&quot;/assets/20170328/twitter7.png&quot; alt=&quot;图片&quot; /&gt;&lt;/p&gt;
+&lt;center style=&quot;font-size:12px;color:#9a9a9a&quot;&gt;
+可能有更大的minChunks值，来产生一个更小的commonlazy.js包
+&lt;/center&gt;
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;
+现在的异步chunk已经非常小了，并且所有的代码都聚合到了一个叫 &lt;em&gt;commonlazy.js&lt;/em&gt; 的文件中。由于这些bundle已经很小了，所以大小的影响直至第二次访问都不是很明显。
+现在，被分隔到每个bundle中的代码少了很多，我们通过将这些通用模块放入单独的可高速缓存的chunk中来节省用户加载时间和数据的消耗。&lt;/p&gt;
+
+&lt;h2 id=&quot;更进一步控制-minchunks-函数&quot;&gt;更进一步控制: minChunks 函数&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/20170328/twitter8.png&quot; alt=&quot;图片&quot; /&gt;
+&lt;br /&gt;
+&lt;br /&gt;
+如果你想要更多控制会怎么样？有时候你并不想要单个共享的bundle，因为并不是每个 &lt;em&gt;懒/入口&lt;/em&gt; chunk 都会用到它。 &lt;em&gt;minChunks&lt;/em&gt; 属性也支持 function ！！这可以让你筛选哪些模块会被加入你新的bundle中。举个例子：&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;webpack&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;optimize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;CommonsChunkPlugin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;filename&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;lodash-moment-shared-bundle.js&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;minChunks&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;module&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;count&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;module&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;resource&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;sr&quot;&gt;/lodash|moment/&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;module&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;resource&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;count&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;上面的例子就是说：&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;哟，webpack, 当你扫描模块时候，如果模块的绝对路径匹配到了lodash或者momentjs并且出现在了三个入口文件中，那么把这些模块打包到一个bundle中。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;你可以通过设置“async：true”将同样的行为应用于异步bundle。&lt;/p&gt;
+
+&lt;h2 id=&quot;再多的控制&quot;&gt;再多的控制&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/20170328/twitter9.png&quot; alt=&quot;图片&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;通过这个 &lt;em&gt;minChunks&lt;/em&gt; 你可以为特定的入口和bundle创建更小的可缓存vendor集合。最后，你看到的可能会是这样：&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;lodashMomentModuleFilter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;module&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;count&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;module&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;resource&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;sr&quot;&gt;/lodash|moment/&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;module&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;resource&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;count&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;immutableReactModuleFilter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;module&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;count&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;module&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;resource&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;sr&quot;&gt;/immutable|react/&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;module&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;resource&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;count&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;webpack&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;optimize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;CommonsChunkPlugin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;filename&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;lodash-moment-shared-bundle.js&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;minChunks&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;lodashMomentModuleFilter&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;webpack&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;optimize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;CommonsChunkPlugin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;filename&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;immutable-react-shared-bundle.js&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;minChunks&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;immutableReactModuleFilter&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h2 id=&quot;没有银弹&quot;&gt;没有银弹！&lt;/h2&gt;
+
+&lt;p&gt;&lt;em&gt;CommonsChunkPlugin()&lt;/em&gt; 或许很强大，但请记住，这些例子都有它们所适用的场景。所以当你复制粘贴这些代码片段之前，从&lt;a href=&quot;https://medium.com/@samccone&quot;&gt;Sam Saccone&lt;/a&gt;、&lt;a href=&quot;https://medium.com/@paul_irish&quot;&gt;Paul Irish&lt;/a&gt;还有&lt;a href=&quot;https://youtu.be/6m_E-mC0y3Y?t=11m38s&quot;&gt;MPDIA&lt;/a&gt;那先获得一些建议，以确保你使用的是正确方案。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/20170328/advice.png&quot; alt=&quot;图片&quot; /&gt;&lt;/p&gt;
+&lt;center style=&quot;font-size:12px;color:#9a9a9a&quot;&gt;
+在运用解决方案之前，请务必了解你的进程
+&lt;/center&gt;
+
+&lt;h2 id=&quot;从哪找到更多的例子&quot;&gt;从哪找到更多的例子？&lt;/h2&gt;
+&lt;p&gt;这些只是使用和配置 &lt;em&gt;CommonsChunkPlugin()&lt;/em&gt; 的例子。要想了解更多，在我们的 webpack/webpack GitHub 核心仓库中查看 &lt;em&gt;/examples&lt;/em&gt; 目录！如果你还有更好的想法,欢迎提交PR!&lt;/p&gt;</content><author><name>Laolizi</name><email>dllglishaoi@gmail.com</email></author><category term="Webpack" /><summary type="html">原文地址：webpack bits: Getting the most out of the CommonsChunkPlugin() 作者：Sean T. Larkin 翻译人：李绍懿</summary></entry><entry><title type="html">是时候再给TypeScript一次机会了【译】</title><link href="http://localhost:4000/javascript/give-typescript-another-chance/" rel="alternate" type="text/html" title="是时候再给TypeScript一次机会了【译】" /><published>2017-03-22T00:00:00+08:00</published><updated>2017-03-22T00:00:00+08:00</updated><id>http://localhost:4000/javascript/give-typescript-another-chance</id><content type="html" xml:base="http://localhost:4000/javascript/give-typescript-another-chance/">&lt;blockquote&gt;
   &lt;ul&gt;
     &lt;li&gt;原文地址：&lt;a href=&quot;https://medium.freecodecamp.com/its-time-to-give-typescript-another-chance-2caaf7fabe61#.n95889k54&quot;&gt;It’s time to give TypeScript another chance&lt;/a&gt;&lt;/li&gt;
     &lt;li&gt;作者：Jason Dreyzehne&lt;/li&gt;
