@@ -6,7 +6,7 @@ tags:
   - JavaScript
 ---
 
-> * 原文地址：[Introducing React Loadable](https://codeburst.io/javascript-error-messages-debugging-d23f84f0ae7c)
+> * 原文地址：[JavaScript error messages && debugging](https://codeburst.io/javascript-error-messages-debugging-d23f84f0ae7c)
 * 作者：Diogo Spínola
 * 翻译人：李绍懿
 
